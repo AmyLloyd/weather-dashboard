@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <link rel="stylesheet" href="./assets/style.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<!--Include script tag here or at the end of body w3 schools said in the head-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <main>
+        <header>
+            <div class="p-5 bg-primary text-white text-center">
+                <h1>Weather dashboard</h1>
+            </div>
+        </header>
+        
+<!--container to hold all divs for grid-->
+        <div class="container mt-5">
+            <div class="row">
+
+<!--4 column Side bar containing form element-->
+                <div class="col-sm-4">
+                    <h2>Search for a city:</h2>
+                </div>
+
+<!--8 column div for weather summary information-->
+                <div class="col-sm-8">
+                    <h2 id="location-name"></h2>
+                    <h5>Temp:<span id="temperature"></span></h5>
+                    <h5>Wind:<span id="humidity"></span></h5>
+                    <h5>Humidity:<span id="humidity"></span></h5>
+                
+                </div>
+<!-- 8 column div for cards showing 5 day forecast-->
+
+<!--4 column Side bar for dynamically-pasted search items -->
+                <div class="col-sm-4">
+<!--This is the anchor for the search items-->
+                    <ul id="root"></ul>
+                </div>
+<!--div with an anchor for the 5 day forecast set of cards that will be created dynamically with a loop-->
+                <div class="col-sm-8">
+                    <h2>5-Day Forecast</h2>
+                    <div id="forecast-cards">
+                        <!--bootstrap for card styling - could be added through JQuery-->
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-header">
+                              Date:
+                            </div>
+                            <ul class="list-group list-group-flush">
+                              <li class="list-group-item">Temp:</li>
+                              <li class="list-group-item">Wind:</li>
+                              <li class="list-group-item">Humidity:</li>
+                            </ul>
+                          </div>
+
+                    </div>
+                </div>
+
+
+
+
+    </main>
+
+    <script type="text/javascript" src="./assets/script.js"></script>
+</body>
+</html>
