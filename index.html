@@ -21,10 +21,10 @@
         
 <!--container to hold all divs for grid-->
         <div class="container mt-5">
-            <div class="row">
+            <div class="row h-100">
 
 <!--4 column Side bar containing form element-->
-                <div class="col-sm-4">
+                <div class="col-md-4 h-100">
                     <h2>Search for a city:</h2>
                     <form id="search-form">
                         <div class="form-group" >
@@ -33,41 +33,46 @@
                         </div>
                         <button type="submit" class="btn btn-primary">Search</button>
                     </form>
+                    <!--4 column Side bar for dynamically-pasted search items -->
+                    <div>
+                    <!--This is the anchor for the search items inside the above div for positioning -->
+                        <ul id="search-list"></ul>
+                    </div>
                 </div>
+
+
 
 <!--8 column div for weather summary information-->
-                <div class="col-sm-8">
-                    <h2 id="location-name">Target Location</h2>
-                    <h5>Temp:<span id="temperature"></span></h5>
-                    <h5>Wind:<span id="humidity"></span></h5>
-                    <h5>Humidity:<span id="humidity"></span></h5>
-                
-                </div>
-<!-- 8 column div for cards showing 5 day forecast-->
-
-<!--4 column Side bar for dynamically-pasted search items -->
-                <div class="col-sm-4">
-<!--This is the anchor for the search items-->
-                    <ul id="search-list"></ul>
-                </div>
+                <div class="col-md-8">
+                    <div class="row">                    
+                        <h2 id="location-name">Target Location</h2>
+                        <h5>Temp:<span id="temperature"></span></h5>
+                        <h5>Wind:<span id="humidity"></span></h5>
+                        <h5>Humidity:<span id="humidity"></span></h5>
+                    </div>
+                    <!-- 8 column div for cards showing 5 day forecast-->
 <!--div with an anchor for the 5 day forecast set of cards that will be created dynamically with a loop-->
-                <div class="col-sm-8">
-                    <h2>5-Day Forecast</h2>
-                    <div id="forecast-cards">
-                        <!--bootstrap for card styling - could be added through JQuery-->
-                        <div class="card" style="width: 18rem;">
-                            <div class="card-header">
-                              Date:
+                    <div class="col-12 col-sm-12 col-md-8">
+                        <h2>5-Day Forecast</h2>
+                        <div id="forecast-cards">
+                            <!--bootstrap for card styling - could be added through JQuery-->
+                            <div class="card" style="width: 18rem;">
+                                <div class="card-header">
+                                Date:
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Temp:</li>
+                                <li class="list-group-item">Wind:</li>
+                                <li class="list-group-item">Humidity:</li>
+                                </ul>
                             </div>
-                            <ul class="list-group list-group-flush">
-                              <li class="list-group-item">Temp:</li>
-                              <li class="list-group-item">Wind:</li>
-                              <li class="list-group-item">Humidity:</li>
-                            </ul>
-                          </div>
 
                     </div>
                 </div>
+
+                
+                </div>
+
 
     </main>
 
