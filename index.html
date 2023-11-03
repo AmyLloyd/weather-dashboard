@@ -28,10 +28,15 @@
                     <h2>Search for a city:</h2>
                     <form id="search-form">
                         <div class="form-group" >
-                          <label for="search-input"></label>
-                          <input type="text" class="form-control" id="search-input" placeholder="Location name" name="search-input">
+                          <label for="search-city-input">Location name</label>
+                          <input type="text" class="form-control" id="search-city-input" placeholder="Location name" name="search-city-input">
                         </div>
-                        <button type="submit" class="btn btn-primary">Search</button>
+                        <div class="form-group">
+                            <label for="search-country-input">Country code</label>
+                            <input type="text" class="form-control" id = "search-country-input" placeholder="Country code e.g. AU" name="search-country-input">
+                            <a href="https://www.iso.org/obp/ui/#search">Country codes reference</a>
+                        </div>
+                        <button id= "submit" type="submit" class="btn btn-primary">Search</button>
                     </form>
                     <!--4 column Side bar for dynamically-pasted search items -->
                     <div>
