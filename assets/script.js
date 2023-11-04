@@ -125,6 +125,7 @@ function displayForecast(data){
   };
 };
 
+//THESE ARE THE CHANGES I MADE
 function handleSearchHistory(citySearchInput) {
   const searchHistoryEl = document.getElementById('search-buttons');
   console.log(searchHistoryEl);
@@ -136,7 +137,7 @@ function handleSearchHistory(citySearchInput) {
   for (i = 0; i < searchHistoryList.length; i++) {
     let searchButton = document.createElement('button');
     searchButton.setAttribute('class', 'button');
-    
+
     searchButton.setAttribute('name', searchHistoryList[2])
    
     searchHistoryEl.append(searchButton);
