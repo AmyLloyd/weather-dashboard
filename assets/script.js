@@ -24,6 +24,7 @@ submitButton.addEventListener("click", function(event) {
   }
 
   getWeather(citySearchInput);
+  handleSearchHistory(citySearchInput)
  
 });
 
@@ -47,7 +48,6 @@ function getForecast(lat, lon){
     fetch(url)
   .then(response=>response.json())
   .then((data)=>{
-    console.log(data);
     displayForecast(data.list)
   });
 };
@@ -124,3 +124,31 @@ function displayForecast(data){
     forecastEL.append(card)
   };
 };
+
+function handleSearchHistory(citySearchInput) {
+  const searchHistoryEl = document.getElementById('search-buttons');
+  console.log(searchHistoryEl);
+  const searchHistoryList = [];
+  
+
+  searchHistoryList.push(citySearchInput);
+  console.log(searchHistoryList);
+  for (i = 0; i < searchHistoryList.length; i++) {
+    let searchButton = document.createElement('button');
+    searchButton.setAttribute('class', 'button');
+    
+    searchButton.setAttribute('name', searchHistoryList[2])
+   
+    searchHistoryEl.append(searchButton);
+  };
+  
+  // localStorage.setItem("searchHistory", JSON.stringify(searchHistoryList));
+  // function renderHistory() {
+  //   let storedLocations = JSON.parse(localStorage.getItem("searchHistoryList"));
+  //   if (storedLocations !== null) {
+  //     ")
+  //   }
+  // }
+
+};
+
