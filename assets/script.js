@@ -1,14 +1,22 @@
 var submitButton = document.getElementById('submit');
-const weatherEl=document.querySelector(".weather")
-const forecastEL=document.getElementById("forecast-cards")
-
-var APIkey='427b6e060e396ad75184ba7b9f4658e6'
+const weatherEl=document.querySelector(".weather");
+const forecastEL=document.getElementById("forecast-cards");
+var APIkey='427b6e060e396ad75184ba7b9f4658e6';
 
 submitButton.addEventListener("click", function(event) {
   event.preventDefault();
 
+  //clear dynamically made elements
+  //from https://betterprogramming.pub/dynamically-removing-children-from-a-dom-element-in-javascript-new-node-new-you-6143dabaea89
+    while (weatherEl.firstChild) {
+      weatherEl.removeChild(weatherEl.firstChild);
+    };
+    while(forecastEL.firstChild) {
+      forecastEL.removeChild(forecastEL.firstChild);
+    };
+
   var citySearchInput= document.querySelector("#search-city-input").value;
-  var countrySearchInput = document.querySelector("#search-country-input").value;
+  console.log(citySearchInput);
   
   if(!citySearchInput) {
     console.log("You need a search input value!");
@@ -17,94 +25,35 @@ submitButton.addEventListener("click", function(event) {
 
   getWeather(citySearchInput);
  
-  //Uses search input to build the query string for LATITUDE AND LONGITUDE of location
- 
-  //Append an element with searchLocation data
-
-  //Take coordinates from searchLocation for weather fetch
-
-
-
- 
 });
 
 function getWeather(citySearchInput) {
 
-const url=`https://api.openweathermap.org/data/2.5/weather?q=${citySearchInput}&appid=${APIkey}&units=metric`
+  //url using template literals to blend in variables to the string
+  const url=`https://api.openweathermap.org/data/2.5/weather?q=${citySearchInput}&appid=${APIkey}&units=metric`
 
-fetch(url)
-.then(response=>response.json())
-.then((data)=>{
-console.log(data);
-  getForecast(data.coord.lat, data.coord.lon)
-  displayWeather(data)
-})
-
-
-
-  // let requestCoordinatesUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + citySearchInput + ',' + countrySearchInput + '&limit=1&appid=427b6e060e396ad75184ba7b9f4658e6'
-  
-  // let response = fetch(requestCoordinatesUrl);
-
-  // let searchLocation;
-
-
-  // console.log(requestCoordinatesUrl);
-  // console.log(citySearchInput);
-  // console.log(countrySearchInput);
-  
-  // //fetches coordinates for search Item and pushes them to a searchLocations array
- 
-
-  // fetch(requestCoordinatesUrl)
-  // .then(response => {
-  //   if (!response.ok) {
-  //     throw new Error('Network response was not ok');
-  //   }
-  //   return response.json(); // Convert the response body to JSON
-  // })
-  // .then(data => {
-  //   // Assign the response data to the outer variable
-   
-  //   searchLocations = data;
-
-  //     name: JSON.stringify(data[0].name),
-  //     lat: JSON.stringify(data[0].lat),
-  //     lon: JSON.stringify(data[0].lon),
-  //   }
-
-  //   console.log(searchLocations);
-
-  //   //Use coordinates for weather API
-  //   let requestWeatherUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + searchLocations.lat + '&lon=' + searchLocations.lon + '&appid=427b6e060e396ad75184ba7b9f4658e6'
-    
-  //   fetch(requestWeatherUrl)
-  //   .then(response => {
-  //     if(!response.ok) {
-  //       console.log("There is an error");
-  //     }
-  //     return response.json();
-  //   })
-  //   .then(data => {
-  //     console.log(data);
-  //   })
-
-  // })
-  // console.log(searchLocations);
-}
-
-function getForecast(lat, lon){
-  let url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${APIkey}&units=metric`
   fetch(url)
-.then(response=>response.json())
-.then((data)=>{
+  .then(response=>response.json())
+  .then((data)=>{
   console.log(data);
-  displayForecast(data.list)
-})
+    getForecast(data.coord.lat, data.coord.lon)
+    displayWeather(data)
+  })
+};
 
+//use parameters lat and lon in this function, in order for the previous fetch to share the values
+function getForecast(lat, lon){
+    let url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${APIkey}&units=metric`
+    fetch(url)
+  .then(response=>response.json())
+  .then((data)=>{
+    console.log(data);
+    displayForecast(data.list)
+  });
+};
 
-}
-
+// create card according to bootstrap
+// append the elements to the page for the basic information
 function displayWeather(data){
 
   const card= document.createElement("div")
@@ -128,18 +77,18 @@ function displayWeather(data){
   humidity.textContent=`Humidity: ${data.main.humidity} %`
   wind.textContent=`Wind Speed:${data.wind.speed} MPH`
 
+  //appending order back to the identified element within the html
+  span.append(icon)
+  h2.append(span)
+  cardHeader.append(h2)
+  cardBody.append(temp, humidity,wind)
+  card.append(cardHeader, cardBody)
+  weatherEl.append(card)
+};
 
-span.append(icon)
-h2.append(span)
-cardHeader.append(h2)
-cardBody.append(temp, humidity,wind)
-card.append(cardHeader, cardBody)
-weatherEl.append(card)
-
-}
-
+//create card elements according to bootstrap and append elements 
 function displayForecast(data){
-
+  //for loop necessary to choose selected items from the list of 40 forecast recordings taken every 3 hours
   for (let i = 0; i <5; i++) {
     const index= i * 8 + 4
 
@@ -150,6 +99,7 @@ function displayForecast(data){
     const h2=document.createElement("h2")
     const span=document.createElement("span")
     const icon= document.createElement("img")
+    //put icon in span element using setAttirbute to dynamically create the element.
     icon.setAttribute("src", "https://openweathermap.org/img/w/" + data[index].weather[0].icon + ".png")
     const day= new Date(data[index].dt*1000).toDateString()
     h2.textContent=day
@@ -166,15 +116,11 @@ function displayForecast(data){
     wind.textContent=`Wind Speed:${data[index].wind.speed} MPH`
   
   
-  span.append(icon)
-  h2.append(span)
-  cardHeader.append(h2)
-  cardBody.append(temp, humidity,wind)
-  card.append(cardHeader, cardBody)
-  forecastEL.append(card)
-  
-
-    
-  }
-
-}
+    span.append(icon)
+    h2.append(span)
+    cardHeader.append(h2)
+    cardBody.append(temp, humidity,wind)
+    card.append(cardHeader, cardBody)
+    forecastEL.append(card)
+  };
+};
