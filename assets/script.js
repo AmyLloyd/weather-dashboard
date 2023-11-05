@@ -24,7 +24,8 @@ submitButton.addEventListener("click", function(event) {
   }
 
   getWeather(citySearchInput);
-  handleSearchHistory(citySearchInput)
+  handleSearchHistory(citySearchInput);
+  console.log(handleSearchHistory);
  
 });
 
@@ -36,7 +37,6 @@ function getWeather(citySearchInput) {
   fetch(url)
   .then(response=>response.json())
   .then((data)=>{
-  console.log(data);
     getForecast(data.coord.lat, data.coord.lon)
     displayWeather(data)
   })
@@ -127,29 +127,46 @@ function displayForecast(data){
 
 //THESE ARE THE CHANGES I MADE
 function handleSearchHistory(citySearchInput) {
-  const searchHistoryEl = document.getElementById('search-buttons');
-  console.log(searchHistoryEl);
-  const searchHistoryList = [];
+  // const searchHistoryList = [];
+  // const searchHistoryEl = document.getElementById('search-buttons');
+  // let searchList;
+  // const createList = function createList(searchHistoryList) {
+  //   for (i = 0; i < searchHistoryList.length; i++) {
+  //     searchList = `<button class="btn-outline-secondary">${searchHistoryList[i]}</button>`
+  //     console.log(searchHistoryList[i]);
+  //     return searchList;
+  //   };
+  //   searchHistoryEl.insertAdjacentHTML("afterbegin", searchList)
+  // }
+  // searchHistoryList.push(citySearchInput);
+  // createList();
+  let searchHistoryList = citySearchInput;
+
+  let searchButton = $('<button>');
+  const searchHistoryEL = $('#search-buttons');
+
+  // for (i = 0; i < searchHistoryList.length; i++) {
+    searchButton.textContent = `this is a button: ${searchHistoryList}`;
+    searchButton.attr('type', 'button');
+    searchButton.addClass('btn-secondary');
+    searchButton.addClass('btn');
+    searchButton.addClass('btn-large');
+    searchHistoryEL.append(searchButton);
+  // }
+
+};
+
+
+ 
   
-
-  searchHistoryList.push(citySearchInput);
-  console.log(searchHistoryList);
-  for (i = 0; i < searchHistoryList.length; i++) {
-    let searchButton = document.createElement('button');
-    searchButton.setAttribute('class', 'button');
-
-    searchButton.setAttribute('name', searchHistoryList[2])
-   
-    searchHistoryEl.append(searchButton);
-  };
   
   // localStorage.setItem("searchHistory", JSON.stringify(searchHistoryList));
   // function renderHistory() {
   //   let storedLocations = JSON.parse(localStorage.getItem("searchHistoryList"));
   //   if (storedLocations !== null) {
-  //     ")
+  //     console.log("search history", searchHistory);
   //   }
+      
   // }
 
-};
 
