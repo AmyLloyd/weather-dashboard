@@ -16,7 +16,6 @@ submitButton.addEventListener("click", function(event) {
     };
 
   var citySearchInput= document.querySelector("#search-city-input").value;
-  console.log(citySearchInput);
   
   if(!citySearchInput) {
     console.log("You need a search input value!");
@@ -125,31 +124,36 @@ function displayForecast(data){
   };
 };
 
+let searchHistory = [];  
+
 //THESE ARE THE CHANGES I MADE
 function handleSearchHistory(citySearchInput) {
-  const searchHistoryEl = document.getElementById('search-buttons');
-  console.log(searchHistoryEl);
-  const searchHistoryList = [];
+  const anchorEl = document.getElementById('search-buttons');
+  if (searchHistory.includes(citySearchInput)) {
+    console.log("searched it before");
+    return;
+  }
+
+  searchHistory.push(citySearchInput);
+  localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
   
-
-  searchHistoryList.push(citySearchInput);
-  console.log(searchHistoryList);
-  for (i = 0; i < searchHistoryList.length; i++) {
+  for (i = 0; i < searchHistory.length; i++) {
     let searchButton = document.createElement('button');
-    searchButton.setAttribute('class', 'button');
+  
+    if (citySearchInput === searchHistory[i]) {
+      console.log("city search already complete. Check the search History buttons below");
+      return;
+    } else { 
+      searchButton.setAttribute('type', 'button');
+      searchButton.setAttribute('class', 'btn');
+      searchButton.setAttribute('class', 'btn-info');
+      searchButton.setAttribute('class', 'btn-primary');
+      searchButton.textContent = searchHistory[i];
+     
+      anchorEl.append(searchButton);}
 
-    searchButton.setAttribute('name', searchHistoryList[2])
-   
-    searchHistoryEl.append(searchButton);
   };
   
-  // localStorage.setItem("searchHistory", JSON.stringify(searchHistoryList));
-  // function renderHistory() {
-  //   let storedLocations = JSON.parse(localStorage.getItem("searchHistoryList"));
-  //   if (storedLocations !== null) {
-  //     ")
-  //   }
-  // }
 
 };
 
