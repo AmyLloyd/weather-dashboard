@@ -5,8 +5,6 @@ var APIkey='427b6e060e396ad75184ba7b9f4658e6';
 
 submitButton.addEventListener("click", function(event) {
   event.preventDefault();
-
-
   var citySearchInput= document.querySelector("#search-city-input").value;
   
   if(!citySearchInput) {
@@ -15,10 +13,7 @@ submitButton.addEventListener("click", function(event) {
   }
 
   getWeather(citySearchInput);
-  handleSearchHistory(citySearchInput);
-
-  
- 
+  handleSearchHistory(citySearchInput);  
 });
 
 function getWeather(citySearchInput) {
@@ -128,48 +123,55 @@ function displayForecast(data){
 };
 
 let searchHistory = [];  
-
-//THESE ARE THE CHANGES I MADE
+//handle search history setting local storage and rendering local storage
 function handleSearchHistory(citySearchInput) {
-  const anchorEl = document.getElementById('search-buttons');
-  if (searchHistory.includes(citySearchInput)) {
-    console.log("searched it before");
-    return;
-  }
-
+  //push to an array in local storage
   searchHistory.push(citySearchInput);
   localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
-  
-  // for (i = 0; i < searchHistory.length; i++) {
+  renderLocalStorage();
+};
 
-    const searchButton = document.createElement('button');
-  
-    // if (citySearchInput === searchHistory[i]) {
-    //   console.log("city search already complete. Check the search History buttons below");
-    //   return;
-    // } else { 
+  $("#search-buttons").on("click", "button", function(event) {
+    event.preventDefault();
+    console.log($(this).text());
+    var searchAgain = ($(this).text());
+    getWeather(searchAgain);
+
+  });
+
+window.onload = (event) => {
+  renderLocalStorage();
+};
+
+//render local storage as a function this enabled it to be called in multiple other functions - on load and in handle search history
+function renderLocalStorage() {
+  //run function after checking that storage is not empty
+  const anchorEl = document.getElementById('search-buttons');
+  const searchHistoryFromStorage = JSON.parse(localStorage.getItem('searchHistory'));
+  if (typeof searchHistoryFromStorage === 'undefined' || searchHistoryFromStorage === null) {
+      console.log(typeof searchHistoryFromStorage === 'undefined' || searchHistoryFromStorage === null, "null or undefined so return");
+      return;
+  } else {
+  //clear dynamically made elements
+  //from https://betterprogramming.pub/dynamically-removing-children-from-a-dom-element-in-javascript-new-node-new-you-6143dabaea89
+  while (weatherEl.firstChild) {
+    weatherEl.removeChild(weatherEl.firstChild);
+  };
+  while(forecastEL.firstChild) {
+    forecastEL.removeChild(forecastEL.firstChild);
+  };
+  while(anchorEl.firstChild) {
+    anchorEl.removeChild(anchorEl.firstChild);
+  }
+  for (i = 0; i < searchHistoryFromStorage.length; i++) {
+      let searchButton = document.createElement('button');
       searchButton.setAttribute('type', 'button');
       searchButton.setAttribute('class', 'btn');
       searchButton.setAttribute('class', 'btn-info');
       searchButton.setAttribute('class', 'btn-primary');
       searchButton.classList.add('search-trigger');
-      searchButton.innerHTML = citySearchInput;
-     
+      searchButton.innerHTML = searchHistoryFromStorage[i];    
       anchorEl.append(searchButton);
-    // }
-
-
-  // };
-//based on code snippet from : https://typeofnan.dev/how-to-bind-event-listeners-on-dynamically-created-elements-in-javascript/
-
-  anchorEl.addEventListener('click', function (e) {
-    if(e.target.classList.contains('search-trigger')) {
-      var citySearchInput = e.target.innerHTML;
-      console.log(e);
-      getWeather(citySearchInput);
-      
     }
-  });
-
+  }
 };
-
