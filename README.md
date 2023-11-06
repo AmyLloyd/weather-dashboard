@@ -11,7 +11,7 @@ I have learnt the use of API requests and how to manage the data responses. I ha
 
 A future direction for this weather dashboard includes recommendations and warnings based on the retrieved data. For example, expanding the retreival to include UV radiation could then prompt an alert to remember to seek shade and apply sunscreen at certain times. 
 
-## Table of Contents (Optional)
+## Table of Contents
 
 If your README is long, add a table of contents to make it easy for users to find what they need.
 
@@ -20,11 +20,11 @@ If your README is long, add a table of contents to make it easy for users to fin
 
 ## Usage
 
-To use the password generator, go to this link: https://amylloyd.github.io/weather-dashboard/ 
+To use the weather dashboard, go to this link: https://amylloyd.github.io/weather-dashboard/ 
 
-![password-generator](assets/images/password-generator.png)
+![weather-dashboard](assets/weather-dashboard-homepage.PNG)
 
-Type in a location you would like weather data for. 
+Type in a location to search for the weather data for that location.
 
 You will then see the current weather information: temperature, humidity and wind speed, as well as a 5-day forecast. If you would like to return to a previously searched location, you can easily access it's button in the search history list. 
 
