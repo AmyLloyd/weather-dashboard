@@ -6,14 +6,6 @@ var APIkey='427b6e060e396ad75184ba7b9f4658e6';
 submitButton.addEventListener("click", function(event) {
   event.preventDefault();
 
-  //clear dynamically made elements
-  //from https://betterprogramming.pub/dynamically-removing-children-from-a-dom-element-in-javascript-new-node-new-you-6143dabaea89
-    while (weatherEl.firstChild) {
-      weatherEl.removeChild(weatherEl.firstChild);
-    };
-    while(forecastEL.firstChild) {
-      forecastEL.removeChild(forecastEL.firstChild);
-    };
 
   var citySearchInput= document.querySelector("#search-city-input").value;
   
@@ -23,11 +15,22 @@ submitButton.addEventListener("click", function(event) {
   }
 
   getWeather(citySearchInput);
-  handleSearchHistory(citySearchInput)
+  handleSearchHistory(citySearchInput);
+
+  
  
 });
 
 function getWeather(citySearchInput) {
+
+    //clear dynamically made elements
+  //from https://betterprogramming.pub/dynamically-removing-children-from-a-dom-element-in-javascript-new-node-new-you-6143dabaea89
+  while (weatherEl.firstChild) {
+    weatherEl.removeChild(weatherEl.firstChild);
+  };
+  while(forecastEL.firstChild) {
+    forecastEL.removeChild(forecastEL.firstChild);
+  };
 
   //url using template literals to blend in variables to the string
   const url=`https://api.openweathermap.org/data/2.5/weather?q=${citySearchInput}&appid=${APIkey}&units=metric`
@@ -137,23 +140,36 @@ function handleSearchHistory(citySearchInput) {
   searchHistory.push(citySearchInput);
   localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
   
-  for (i = 0; i < searchHistory.length; i++) {
-    let searchButton = document.createElement('button');
+  // for (i = 0; i < searchHistory.length; i++) {
+
+    const searchButton = document.createElement('button');
   
-    if (citySearchInput === searchHistory[i]) {
-      console.log("city search already complete. Check the search History buttons below");
-      return;
-    } else { 
+    // if (citySearchInput === searchHistory[i]) {
+    //   console.log("city search already complete. Check the search History buttons below");
+    //   return;
+    // } else { 
       searchButton.setAttribute('type', 'button');
       searchButton.setAttribute('class', 'btn');
       searchButton.setAttribute('class', 'btn-info');
       searchButton.setAttribute('class', 'btn-primary');
-      searchButton.textContent = searchHistory[i];
+      searchButton.classList.add('search-trigger');
+      searchButton.innerHTML = citySearchInput;
      
-      anchorEl.append(searchButton);}
+      anchorEl.append(searchButton);
+    // }
 
-  };
-  
+
+  // };
+//based on code snippet from : https://typeofnan.dev/how-to-bind-event-listeners-on-dynamically-created-elements-in-javascript/
+
+  anchorEl.addEventListener('click', function (e) {
+    if(e.target.classList.contains('search-trigger')) {
+      var citySearchInput = e.target.innerHTML;
+      console.log(e);
+      getWeather(citySearchInput);
+      
+    }
+  });
 
 };
 
